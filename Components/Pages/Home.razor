@@ -1,0 +1,22 @@
+﻿@page "/"
+@inject NavigationManager _nav
+
+<PageTitle>Home</PageTitle>
+
+<h1>Inventory Management Sysytem</h1>
+
+<p>Welcome to your pub's inventory system.</p>
+<button class="btn btn-primary" @onclick="NavigateToDelivery" > Log Delivery</button>
+<button class="btn btn-primary" @onclick="NavigateToStockTake"> Log Stock Take</button>
+
+@code{
+    public void NavigateToDelivery(){
+        _nav.NavigateTo("LogDelivery");
+    }
+    public void NavigateToStockTake(){
+        _nav.NavigateTo("LogStock");
+    }
+    
+}
+
+

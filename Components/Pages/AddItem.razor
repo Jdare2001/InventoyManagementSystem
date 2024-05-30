@@ -1,0 +1,47 @@
+@page "/AddItem"
+
+@inject IMDatabaseContext DbContext
+@inject NavigationManager Navigation
+@rendermode InteractiveServer 
+
+@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Forms
+
+
+<h3>Add Item</h3>
+<EditForm Model="item" OnValidSubmit="HandleValidSubmit" FormName="add-item">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    
+        <label for="name">Name</label>
+        <InputText id="name" class="form-control" @bind-Value="item.Name" />
+    
+
+    <br />
+        <label for="description">Description</label>
+        <InputTextArea id="description" class="form-control" @bind-Value="item.Description" />
+    
+
+    <br />
+        <label for="quantity">Quantity</label>
+        <InputNumber id="quantity" class="form-control" @bind-Value="item.Quantity" />
+    
+    <br /> 
+    <button type="submit" class="btn btn-primary">Add Item</button>
+</EditForm>
+
+@code {
+    private Item item = new();
+
+    private async Task HandleValidSubmit()
+    {
+         if (item != null)
+        {
+            DbContext.Items.Add(item);
+            await DbContext.SaveChangesAsync();
+            Navigation.NavigateTo("/Inventory");
+        }
+    }
+}

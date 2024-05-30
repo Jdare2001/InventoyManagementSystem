@@ -1,0 +1,45 @@
+@page "/Inventory"
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+
+<PageTitle>Inventory</PageTitle>
+
+<h1>Inventory</h1>
+@inject IMDatabaseContext DbContext
+
+<h3>Items</h3>
+@if (items != null && items.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in items)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No items found.</p>
+}
+
+@code {
+    private List<Item> items = new List<Item>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = await DbContext.Items.ToListAsync();
+    }
+}
