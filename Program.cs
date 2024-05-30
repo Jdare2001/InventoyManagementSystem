@@ -1,8 +1,11 @@
+using Blazored.Toast;
 using InventoyManagementSystem.Components;
 using Microsoft.EntityFrameworkCore;
 using System;
 
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 string SQLPass = Environment.GetEnvironmentVariable("SQLPass");
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<IMDatabaseContext>(options =>
             options.UseMySql("server=localhost;database=IMSystem;user=root;password="+SQLPass,
@@ -10,7 +13,9 @@ builder.Services.AddDbContext<IMDatabaseContext>(options =>
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
- 
+    
+ builder.Services.AddBlazoredToast();
+ builder.Services.AddBlazorBootstrap();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

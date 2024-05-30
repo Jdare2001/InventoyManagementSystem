@@ -1,5 +1,6 @@
 ﻿@page "/"
-@inject NavigationManager _nav
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
@@ -11,10 +12,10 @@
 
 @code{
     public void NavigateToDelivery(){
-        _nav.NavigateTo("LogDelivery");
+        Navigation.NavigateTo("/LogDelivery");
     }
     public void NavigateToStockTake(){
-        _nav.NavigateTo("LogStock");
+        Navigation.NavigateTo("/LogStock");
     }
     
 }

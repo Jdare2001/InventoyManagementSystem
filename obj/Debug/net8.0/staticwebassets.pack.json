@@ -8237,14 +8237,6 @@
       "PackagePath": "staticwebassets/bootstrap-icons-1.11.3/zoom-out.svg"
     },
     {
-      "Id": "/Users/jaydendare/Documents/C#/InventoyManagementSystem/wwwroot/bootstrap/bootstrap.min.css",
-      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css"
-    },
-    {
-      "Id": "/Users/jaydendare/Documents/C#/InventoyManagementSystem/wwwroot/bootstrap/bootstrap.min.css.map",
-      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css.map"
-    },
-    {
       "Id": "/Users/jaydendare/Documents/C#/InventoyManagementSystem/wwwroot/favicon.png",
       "PackagePath": "staticwebassets/favicon.png"
     },
