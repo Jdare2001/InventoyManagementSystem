@@ -7,6 +7,7 @@
 @using System.Threading.Tasks
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Forms
+@inject InventoryService InventoryService
 
 
 
@@ -26,7 +27,7 @@
     
 
     <br />
-        <label for="quantity">Quantity</label>
+        <label for="quantity">Initial Quantity</label>
         <InputNumber id="quantity" class="form-control" @bind-Value="item.Quantity" />
     
     <br /> 
@@ -34,15 +35,14 @@
 </EditForm>
 
 @code {
-    private Item item = new();
+    private Item item = new Item();
 
     private async Task HandleValidSubmit()
     {
          if (item != null)
         {
-            DbContext.Items.Add(item);
-            await DbContext.SaveChangesAsync();
-            
+            await InventoryService.AddItemAsync(item);
+            Navigation.NavigateTo("/Inventory");  
         }
     }
 }

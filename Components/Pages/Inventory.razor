@@ -1,6 +1,8 @@
 @page "/Inventory"
 @using Microsoft.EntityFrameworkCore
 @rendermode InteractiveServer
+@inject NavigationManager Navigation
+@inject InventoryService InventoryService
 
 <PageTitle>Inventory</PageTitle>
 
@@ -8,7 +10,8 @@
 @inject IMDatabaseContext DbContext
 
 <h3>Items</h3>
-@if (items != null && items.Any())
+<button class="btn btn-primary" @onclick="NavigateToAddItem">Add a New Item</button>
+@if (InventoryItems != null &&   InventoryItems.Any())
 {
     <table class="table">
         <thead>
@@ -19,12 +22,18 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in items)
+            @foreach (var item in InventoryItems)
             {
                 <tr>
                     <td>@item.Name</td>
                     <td>@item.Description</td>
                     <td>@item.Quantity</td>
+                    <td>
+                        <button class="btn btn-primary">Update Item</button>
+                    </td>
+                    <td>
+                    <button class="btn btn-danger" @onclick="() => DeleteItem(item.Id)">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -36,10 +45,21 @@ else
 }
 
 @code {
-    private List<Item> items = new List<Item>();
+    private List<Item> InventoryItems = new List<Item>{};
 
     protected override async Task OnInitializedAsync()
     {
-        items = await DbContext.Items.ToListAsync();
+        InventoryItems = await InventoryService.GetInventoryItemsAsync();
     }
+
+    private async Task DeleteItem(int itemId)
+    {
+        await InventoryService.DeleteItemAsync(itemId);
+        InventoryItems = await InventoryService.GetInventoryItemsAsync(); // Refresh the list
+    }
+    private void NavigateToAddItem(){
+
+        Navigation.NavigateTo("/AddItem");
+    }
+
 }

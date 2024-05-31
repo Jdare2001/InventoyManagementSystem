@@ -13,7 +13,8 @@ builder.Services.AddDbContext<IMDatabaseContext>(options =>
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-    
+
+builder.Services.AddScoped<InventoryService>(); 
  builder.Services.AddBlazoredToast();
  builder.Services.AddBlazorBootstrap();
 var app = builder.Build();
