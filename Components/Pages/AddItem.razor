@@ -4,6 +4,7 @@
 @inject NavigationManager Navigation
 @rendermode InteractiveServer 
 
+@inject IToastService toastService
 @using System.Threading.Tasks
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Forms
@@ -42,6 +43,7 @@
          if (item != null)
         {
             await InventoryService.AddItemAsync(item);
+            toastService.ShowSuccess("Item Added Successfully!");
             Navigation.NavigateTo("/Inventory");  
         }
     }

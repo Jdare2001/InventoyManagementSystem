@@ -11,8 +11,10 @@
 
 <h3>Items</h3>
 <button class="btn btn-primary" @onclick="NavigateToAddItem">Add a New Item</button>
+<br/>
 @if (InventoryItems != null &&   InventoryItems.Any())
 {
+
     <table class="table">
         <thead>
             <tr>
@@ -29,10 +31,10 @@
                     <td>@item.Description</td>
                     <td>@item.Quantity</td>
                     <td>
-                        <button class="btn btn-primary">Update Item</button>
+                        <button class="btn btn-primary"@onclick="() =>OnShowModalUpdateClick(item)">Update Item</button>
                     </td>
                     <td>
-                    <button class="btn btn-danger" @onclick="() => DeleteItem(item.Id)">Delete</button>
+                    <button class="btn btn-danger" @onclick="() => OnShowModalDeleteClick(item)">Delete</button>
                     </td>
                 </tr>
             }
@@ -43,23 +45,93 @@ else
 {
     <p>No items found.</p>
 }
+<Modal @ref="modalDelete" Title="Are You Sure?">
+    <BodyTemplate>
+        Are you sure you would like to remove this item?
+    </BodyTemplate>
+    <FooterTemplate>
+        <Button Color="ButtonColor.Secondary" @onclick="OnHideModalDeleteClick">Close</Button>
+        <Button class="btn btn-danger" @onclick="DeleteItem">Delete</Button>
+    </FooterTemplate>
+</Modal>
 
+
+<Modal @ref="modalUpdate" Title="Edit Item">
+    <BodyTemplate>
+        <EditForm Model="currentItem" FormName="add-item">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <InputText id="name" class="form-control" @bind-Value="currentItem.Name" />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <InputTextArea id="description" class="form-control" @bind-Value="currentItem.Description" />
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <InputNumber id="quantity" class="form-control" @bind-Value="currentItem.Quantity" />
+            </div>
+        </EditForm>
+    </BodyTemplate>
+    <FooterTemplate>
+        <Button Color="ButtonColor.Secondary" @onclick="OnHideModalUpdateClick">Close</Button>
+        <Button class="btn btn-success" @onclick="UpdateItem">Save</Button>
+    </FooterTemplate>
+</Modal>
 @code {
+    private Item currentItem;
     private List<Item> InventoryItems = new List<Item>{};
 
     protected override async Task OnInitializedAsync()
     {
         InventoryItems = await InventoryService.GetInventoryItemsAsync();
     }
-
-    private async Task DeleteItem(int itemId)
-    {
-        await InventoryService.DeleteItemAsync(itemId);
+    private async Task UpdateItem(){
+        await InventoryService.UpdateItemAsync(currentItem);
+        
         InventoryItems = await InventoryService.GetInventoryItemsAsync(); // Refresh the list
+        await OnHideModalUpdateClick();
+    }
+
+    private async Task DeleteItem()
+    {
+        await InventoryService.DeleteItemAsync(currentItem.Id);
+        
+        InventoryItems = await InventoryService.GetInventoryItemsAsync(); // Refresh the list
+        await OnHideModalDeleteClick();
     }
     private void NavigateToAddItem(){
 
         Navigation.NavigateTo("/AddItem");
+    }
+    private Modal modalDelete;
+
+    private async Task OnShowModalDeleteClick(Item item)
+    {
+        currentItem = item;
+        await modalDelete?.ShowAsync();
+    }
+
+    private async Task OnHideModalDeleteClick()
+    {
+        await modalDelete?.HideAsync();
+    }
+    private Modal modalUpdate;
+
+    private async Task OnShowModalUpdateClick(Item item)
+    {
+        currentItem = item;
+        await modalUpdate?.ShowAsync();
+    }
+
+    private async Task OnHideModalUpdateClick()
+    {
+        await modalUpdate?.HideAsync();
     }
 
 }

@@ -18,6 +18,12 @@ public class InventoryService
             await _context.SaveChangesAsync();
         }
     }
+    public async Task UpdateItemAsync(Item item){
+        if(item != null){
+            _context.Items.Update(item);
+            await _context.SaveChangesAsync();
+        }
+    }
     public async Task AddItemAsync(Item item)
     {
         if (item != null)
