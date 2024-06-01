@@ -1,0 +1,34 @@
+  @using BlazorBootstrap
+@using Microsoft.EntityFrameworkCore
+
+<Modal @ref="modal" Title="Are You Sure?">
+    <BodyTemplate>
+        Are you sure you would like to remove this item?
+    </BodyTemplate>
+    <FooterTemplate>
+        <Button Color="ButtonColor.Secondary" @onclick="HideAsync">Close</Button>
+        <Button class="btn btn-danger" @onclick="ConfirmDelete">Delete</Button>
+    </FooterTemplate>
+</Modal>
+
+@code {
+    private Modal modal;
+
+    [Parameter] public EventCallback OnDelete { get; set; }
+
+    public async Task ShowAsync()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task HideAsync()
+    {
+        await modal.HideAsync();
+    }
+
+    private async Task ConfirmDelete()
+    {
+        await OnDelete.InvokeAsync();
+        await HideAsync();
+    }
+}

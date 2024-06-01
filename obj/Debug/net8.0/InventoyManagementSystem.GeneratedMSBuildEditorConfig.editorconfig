@@ -22,6 +22,14 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/jaydendare/Documents/C\#/InventoyManagementSystem/Components/Modals/DeleteModal.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9Nb2RhbHMvRGVsZXRlTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/jaydendare/Documents/C\#/InventoyManagementSystem/Components/Modals/UpdateModal.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9Nb2RhbHMvVXBkYXRlTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/jaydendare/Documents/C\#/InventoyManagementSystem/Components/Pages/AddItem.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9BZGRJdGVtLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

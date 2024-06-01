@@ -1,0 +1,54 @@
+@using BlazorBootstrap
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Forms
+
+<Modal @ref="modal" Title="Edit Item">
+    <BodyTemplate>
+        <EditForm Model="@currentItem" FormName="edit-item">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <InputText id="name" class="form-control" @bind-Value="currentItem.Name" />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <InputTextArea id="description" class="form-control" @bind-Value="currentItem.Description" />
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <InputNumber id="quantity" class="form-control" @bind-Value="currentItem.Quantity" />
+            </div>
+        </EditForm>
+    </BodyTemplate>
+    <FooterTemplate>
+        <Button Color="ButtonColor.Secondary" @onclick="HideAsync">Close</Button>
+        <Button class="btn btn-success" @onclick="SaveChanges">Save</Button>
+    </FooterTemplate>
+</Modal>
+
+@code {
+    private Modal modal;
+    private Item currentItem;
+    [Parameter] public EventCallback<Item> OnSave { get; set; }
+
+    public async Task ShowAsync(Item item)
+    {
+        currentItem = item;
+        await modal.ShowAsync();
+    }
+
+    private async Task HideAsync()
+    {
+        await modal.HideAsync();
+    }
+
+    private async Task SaveChanges()
+    {
+        await OnSave.InvokeAsync(currentItem);
+        await HideAsync();
+    }
+}
