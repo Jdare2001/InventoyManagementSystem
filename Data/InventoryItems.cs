@@ -37,4 +37,11 @@ public class InventoryService
     {
         return await _context.Items.ToListAsync();
     }
+    public async Task<List<Item>> SearchItemsAsync(string partialName)
+    {
+        return await _context.Items
+            .Where(i => i.Name.Contains(partialName))
+            .ToListAsync();
+    }
+    
 }

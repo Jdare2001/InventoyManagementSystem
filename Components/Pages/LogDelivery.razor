@@ -1,5 +1,52 @@
 @page "/LogDelivery"
+@rendermode InteractiveServer 
+@inject InventoryService InventoryService
 
 <PageTitle>LogDelivery</PageTitle>
 
 <h1>Log A Delivery</h1>
+
+<EditForm Model="delivery" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <label for="item-name">Name</label>
+    <InputText id="item-name" class="" @bind-Value="searchName" @onclick="getItemFromName"></InputText >
+    <button class="btn btn-primary">Search</button>
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Current Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in searchList)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+@code{
+    List<Item> searchList = new List<Item>{};
+    String searchName = "";
+    Delivery delivery = new();
+    private void HandleValidSubmit(){
+
+    }
+    private async void  getItemFromName(){
+        searchList = await InventoryService.SearchItemsAsync(searchName);
+        
+        
+    }
+}
