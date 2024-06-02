@@ -10,8 +10,8 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
     <label for="item-name">Name</label>
-    <InputText id="item-name" class="" @bind-Value="searchName" @onclick="getItemFromName"></InputText >
-    <button class="btn btn-primary">Search</button>
+    <InputText id="item-name" class="" @bind-Value="searchName" @onchange="getItemFromName" ></InputText >
+    <button class="btn btn-primary" @onclick="getItemFromName">Search</button>
     <br/>
     <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
